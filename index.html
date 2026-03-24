@@ -36,19 +36,6 @@ header{
     cursor:pointer;
     margin:20px 0;
 }
-#widgetArea{
-    width:100%;
-    min-height:600px;
-    background:#fff;
-    border:2px dashed #ccc;
-    border-radius:8px;
-    margin-top:20px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:#999;
-    font-size:18px;
-}
 .buttons{
     margin-top:10px;
 }
@@ -73,18 +60,14 @@ header{
 <div class="container">
 
 <div id="ad-top">
-<strong>Fillable PDF</strong> – Upload and fill your PDF forms online.
+<strong>Fillable PDF Form</strong> – Create or edit interactive PDF fields securely.
 </div>
 
-<p>Click below to start filling your PDF</p>
+<p>Click below to start creating your fillable PDF</p>
 
-<label class="upload-btn" onclick="openEditor()">
+<label class="upload-btn" onclick="openFillableTool()">
 Upload File
 </label>
-
-<div id="widgetArea">
-<i>Widget-style area – Fillable PDF editor will open in new tab</i>
-</div>
 
 <div id="ad-middle">Middle Ad Placeholder</div>
 
@@ -101,9 +84,9 @@ Home
 </div>
 
 <script>
-function openEditor(){
-    // Open Sejda Fillable PDF editor in new tab
-    window.open("https://www.sejda.com/fill-pdf", "_blank");
+function openFillableTool(){
+    // Open PDF24 Fillable PDF Form tool in same tab (iframe-free)
+    window.location.href = "https://tools.pdf24.org/en/create-pdf-form";
 }
 </script>
 
