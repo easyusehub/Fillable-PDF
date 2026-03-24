@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Fillable PDF – EasyUseHub</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#f5f7fa;
+    text-align:center;
+}
+header{
+    background:#fff;
+    padding:15px;
+    box-shadow:0 2px 5px rgba(0,0,0,.1);
+}
+.container{
+    width:90%;
+    max-width:900px;
+    margin:30px auto;
+}
+#ad-top, #ad-middle{
+    background:#eee;
+    padding:20px;
+    margin:20px 0;
+    border-radius:8px;
+}
+.upload-btn{
+    display:inline-block;
+    padding:15px 30px;
+    background:#2563eb;
+    color:#fff;
+    border-radius:6px;
+    cursor:pointer;
+    margin:20px 0;
+}
+#widgetArea{
+    width:100%;
+    min-height:600px;
+    background:#fff;
+    border:2px dashed #ccc;
+    border-radius:8px;
+    margin-top:20px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#999;
+    font-size:18px;
+}
+.buttons{
+    margin-top:10px;
+}
+.buttons button{
+    padding:10px 20px;
+    margin:5px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    color:#fff;
+}
+.tools{ background:#10b981; }
+.home{ background:#f59e0b; }
+</style>
+</head>
+<body>
+
+<header>
+<h2>Fillable PDF – EasyUseHub</h2>
+</header>
+
+<div class="container">
+
+<div id="ad-top">
+<strong>Fillable PDF</strong> – Upload and fill your PDF forms online.
+</div>
+
+<p>Click below to start filling your PDF</p>
+
+<label class="upload-btn" onclick="openEditor()">
+Upload File
+</label>
+
+<div id="widgetArea">
+<i>Widget-style area – Fillable PDF editor will open in new tab</i>
+</div>
+
+<div id="ad-middle">Middle Ad Placeholder</div>
+
+<!-- All PDF Tools + Home buttons -->
+<div class="buttons">
+<button class="tools" onclick="window.location.href='https://easyusehub.blogspot.com/p/free-pdf-tools-easyusehub.html?m=1'">
+All PDF Tools
+</button>
+<button class="home" onclick="window.location.href='https://easyusehub.blogspot.com/?m=1'">
+Home
+</button>
+</div>
+
+</div>
+
+<script>
+function openEditor(){
+    // Open Sejda Fillable PDF editor in new tab
+    window.open("https://www.sejda.com/fill-pdf", "_blank");
+}
+</script>
+
+</body>
+</html>
