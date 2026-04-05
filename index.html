@@ -2,15 +2,16 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>📂 Fillable PDF Editor – EasyUseHub</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📂 Fillable PDF Editor | EasyUseHub</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+<script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+
 <style>
 :root { --primary: #9333ea; --bg: #f5f7fa; }
-body{ margin:0; font-family:Arial, sans-serif; background:var(--bg); text-align:center; position: relative; overflow-x: hidden; }
-header{ background:#fff; padding:15px; box-shadow:0 2px 5px rgba(0,0,0,.1); }
-.container{ width:95%; max-width:1000px; margin:20px auto; }
+body, html{ margin:0; padding:0; font-family:Arial, sans-serif; background:var(--bg); text-align:center; overflow-x: hidden;}
 
-/* --- Compact Push Notification --- */
+/* --- 🔥 Ultra Compact Push Notification --- */
 #push-notification {
     position: fixed; bottom: -120px; right: 20px; width: 260px; background: #fff; border-radius: 8px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.15); display: flex; align-items: center; padding: 8px 12px;
@@ -29,21 +30,25 @@ header{ background:#fff; padding:15px; box-shadow:0 2px 5px rgba(0,0,0,.1); }
     width: 90%; max-width: 600px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: 0.2s;
 }
 .ad-title { font-size: 16px; font-weight: bold; margin-bottom: 3px; display: block; }
-.ad-btn { background: #fbbf24; color: #000; padding: 5px 12px; border-radius: 4px; font-weight: bold; text-transform: uppercase; display: inline-block; font-size: 10px; margin-top: 5px; }
+.ad-btn { background: #fbbf24; color: #000; padding: 4px 12px; border-radius: 4px; font-weight: bold; font-size: 10px; margin-top: 5px; display: inline-block; text-transform: uppercase; }
 
-/* --- Iframe Tool UI --- */
-#editor-container {
-    width: 100%; height: 600px; background: #fff; border-radius: 12px; border: 1px solid #ddd;
-    overflow: hidden; margin-top: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); display: none;
-}
-iframe { width: 100%; height: 100%; border: none; }
+/* --- Editor UI --- */
+#editor-container { width: 95%; max-width: 1000px; margin: 20px auto; background: #fff; border: 1px solid #ddd; border-radius: 12px; overflow: hidden; display: none; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+#toolbar { background: #f1f5f9; padding: 10px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; }
+#pdf-screen { height: 600px; overflow: auto; background: #525659; position: relative; padding: 20px 0; }
+#pdf-canvas { box-shadow: 0 0 20px rgba(0,0,0,0.4); margin: 0 auto; display: block; cursor: crosshair; background: #fff; }
 
-.upload-btn{ display:inline-block; padding:15px 30px; background:var(--primary); color:#fff; border-radius:8px; cursor:pointer; margin:20px 0; font-weight: bold; border:none; font-size: 16px; }
+/* Text Input Styling */
+.input-field-wrap { position: absolute; min-width: 50px; min-height: 25px; border: 1px dashed var(--primary); background: rgba(255,255,255,0.7); cursor: move; }
+.input-box { width: 100%; height: 100%; border: none; background: transparent; outline: none; padding: 2px; font-size: 14px; color: #000; overflow: hidden; }
+.field-del { position: absolute; top: -20px; right: 0; background: #ef4444; color: white; width: 18px; height: 18px; border-radius: 50%; font-size: 12px; line-height: 18px; text-align: center; cursor: pointer; }
 
-.buttons{ margin: 20px 0 40px 0; }
-.buttons button{ padding:10px 22px; margin:5px; border:none; border-radius:8px; cursor:pointer; color:#fff; font-weight: bold; font-size: 13px; }
-.tools{ background:#10b981; }
-.home{ background:#f59e0b; }
+h1 { margin: 20px; color: #333; font-size: 24px; }
+#upload-box { border: 2px dashed var(--primary); border-radius: 15px; padding: 60px 20px; width: 85%; max-width: 500px; cursor: pointer; margin: 30px auto; background: #fff; font-weight: bold; color: var(--primary); font-size: 18px; }
+.action-btn { padding: 10px 20px; border: none; border-radius: 6px; background: var(--primary); color: #fff; font-weight: bold; cursor: pointer; }
+
+.bottom-buttons { margin: 30px 0 50px 0; }
+.bottom-link { padding: 12px 25px; margin: 5px; border-radius: 8px; text-decoration: none; color: #fff; font-weight: bold; font-size: 14px; display: inline-block; }
 </style>
 </head>
 <body>
@@ -54,27 +59,32 @@ iframe { width: 100%; height: 100%; border: none; }
     <div class="push-text"><b>🚀 46+ Premium Tools Ready!</b><p>PDF, Calculators & More - 100% Free</p></div>
 </div>
 
-<header><h2>📂 Fillable PDF Editor – EasyUseHub</h2></header>
-
-<div class="container">
+<h1>📂 Fillable PDF Editor</h1>
 
 <div class="custom-ad-bridge" onclick="window.open('https://easyusehub.blogspot.com', '_blank')">
     <span class="ad-title">🚀 Try 46+ Premium Free Web Tools!</span>
-    <p>All PDF Tools, 16+ Calculators & More - 100% Free</p>
+    <p>PDF Tools, 16+ Calculators, Age & BMI Tracker - 100% Free</p>
     <div class="ad-btn">Open EasyUseHub</div>
 </div>
 
-<div id="start-area">
-    <button class="upload-btn" onclick="loadIframe()">📁 Click to Start PDF Editor</button>
-</div>
+<div id="upload-box" onclick="document.getElementById('fileInput').click()">📁 Click to Upload PDF & Start Filling</div>
+<input type="file" id="fileInput" accept="application/pdf" hidden>
 
 <div id="editor-container">
-    <iframe id="tool-iframe" src=""></iframe>
+    <div id="toolbar">
+        <div><span style="font-size:13px; font-weight:bold;">EasyUseHub Editor</span></div>
+        <button class="action-btn" onclick="savePdf()">📥 Download Edited PDF</button>
+    </div>
+    <div id="pdf-screen">
+        <div id="canvas-wrapper" style="position: relative; width: fit-content; margin: 0 auto;">
+            <canvas id="pdf-canvas"></canvas>
+        </div>
+    </div>
 </div>
 
 <div class="custom-ad-bridge" style="background: linear-gradient(135deg, #7c3aed, #9333ea);" onclick="window.open('https://easyusehub.blogspot.com/p/ultimate-calculators-hub.html', '_blank')">
     <span class="ad-title">🔢 Smart Online Calculators</span>
-    <p>Loan EMI, Age, BMI & Percentage Calculators</p>
+    <p>Loan EMI, Age, BMI & Percentage Calculators - All in One Hub</p>
     <div class="ad-btn" style="background: #fff; color: #7c3aed;">Try Calculators</div>
 </div>
 
@@ -84,31 +94,73 @@ iframe { width: 100%; height: 100%; border: none; }
     <div class="ad-btn" style="background: #fff; color: #059669;">Compress Now</div>
 </div>
 
-<div class="buttons">
-    <button class="tools" onclick="window.location.href='https://easyusehub.blogspot.com/p/free-pdf-tools-online.html'">📂 All PDF Tools</button>
-    <button class="home" onclick="window.location.href='https://easyusehub.blogspot.com'">🏠 Home</button>
-</div>
-
+<div class="bottom-buttons">
+    <a href="https://easyusehub.blogspot.com/p/free-pdf-tools-online.html" class="bottom-link" style="background:#10b981;">📂 All PDF Tools</a>
+    <a href="https://easyusehub.blogspot.com/" class="bottom-link" style="background:#f59e0b;">🏠 Home</a>
 </div>
 
 <script>
-function loadIframe() {
-    const iframe = document.getElementById('tool-iframe');
-    const container = document.getElementById('editor-container');
-    const startArea = document.getElementById('start-area');
+let pdfDocJS = null, pdfBytes = null;
+const canvas = document.getElementById('pdf-canvas'), ctx = canvas.getContext('2d'), wrapper = document.getElementById('canvas-wrapper');
 
-    // Tor dewa link-ta iframe e set korlam
-    iframe.src = "https://tools.pdf24.org/en/create-fillable-pdf-form";
+document.getElementById('fileInput').onchange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    pdfBytes = await file.arrayBuffer();
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+    pdfDocJS = await pdfjsLib.getDocument({data: pdfBytes}).promise;
+    renderPage(1);
+    document.getElementById('upload-box').style.display = 'none';
+    document.getElementById('editor-container').style.display = 'block';
+    setTimeout(() => { document.getElementById('push-notification').classList.add('active'); }, 2000);
+};
+
+async function renderPage(num) {
+    const page = await pdfDocJS.getPage(num);
+    const viewport = page.getViewport({scale: 1.5});
+    canvas.height = viewport.height; canvas.width = viewport.width;
+    await page.render({canvasContext: ctx, viewport: viewport}).promise;
+}
+
+// ক্লিক করলে টেক্সট বক্স তৈরি হবে
+wrapper.onclick = (e) => {
+    if(e.target.id !== 'pdf-canvas') return;
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
     
-    container.style.display = 'block';
-    startArea.style.display = 'none';
+    const div = document.createElement('div');
+    div.className = 'input-field-wrap';
+    div.style.left = (x - 20) + 'px';
+    div.style.top = (y - 10) + 'px';
+    div.innerHTML = `<div class="field-del" onclick="this.parentElement.remove()">×</div>
+                     <div class="input-box" contenteditable="true" focus>Type here...</div>`;
+    wrapper.appendChild(div);
+};
 
-    // Push notification active
-    setTimeout(function() {
-        document.getElementById('push-notification').classList.add('active');
-    }, 2000);
+async function savePdf() {
+    const { PDFDocument, rgb, StandardFonts } = PDFLib;
+    const finalDoc = await PDFDocument.load(pdfBytes);
+    const font = await finalDoc.embedFont(StandardFonts.Helvetica);
+    const page = finalDoc.getPages()[0];
+    const { width, height } = page.getSize();
+    const scale = width / canvas.width;
+
+    document.querySelectorAll('.input-field-wrap').forEach(el => {
+        const text = el.querySelector('.input-box').innerText;
+        if(text && text !== "Type here...") {
+            const x = parseFloat(el.style.left) * scale;
+            const y = height - (parseFloat(el.style.top) * scale) - (12 * scale);
+            page.drawText(text, { x, y, size: 12 * scale, font, color: rgb(0, 0, 0) });
+        }
+    });
+
+    const bytes = await finalDoc.save();
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(new Blob([bytes], {type: 'application/pdf'}));
+    link.download = "EasyUseHub_Edited.pdf";
+    link.click();
 }
 </script>
-
 </body>
 </html>
