@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>📂 Fillable PDF Editor | EasyUseHub</title>
+<title>📂 Professional PDF Editor | EasyUseHub</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
 
@@ -11,7 +11,7 @@
 :root { --primary: #9333ea; --bg: #f5f7fa; }
 body, html{ margin:0; padding:0; font-family:Arial, sans-serif; background:var(--bg); text-align:center; position: relative; overflow-x: hidden;}
 
-/* --- Ad & Push Notification Styles --- */
+/* --- Ad & Push Notification --- */
 .custom-ad-bridge { background: linear-gradient(135deg, #1e3a8a, #2563eb); color: white; padding: 12px; margin: 15px auto; border-radius: 10px; cursor: pointer; width: 90%; max-width: 600px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: 0.2s;}
 .ad-title { font-size: 15px; font-weight: bold; margin-bottom: 3px; display: block; }
 .custom-ad-bridge p { font-size: 12px; margin: 3px 0; opacity: 0.9; line-height: 1.4;}
@@ -19,36 +19,31 @@ body, html{ margin:0; padding:0; font-family:Arial, sans-serif; background:var(-
 
 #push-notification { position: fixed; bottom: -180px; right: 20px; width: 280px; background: #fff; border-radius: 10px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); display: flex; align-items: center; padding: 12px; z-index: 10000; transition: bottom 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55); cursor: pointer; border-left: 5px solid #2563eb; text-align: left;}
 #push-notification.active { bottom: 20px; }
-.close-push { position: absolute; top: 5px; right: 8px; cursor: pointer; font-weight: bold; }
 
-/* --- Tool Components --- */
+/* --- Editor Core --- */
 h1{margin:20px; color: #333; font-size: 24px;}
 #upload-box{ border:2px dashed var(--primary); border-radius:12px; padding:40px 20px; width:85%; max-width:450px; cursor:pointer; margin:20px auto; background: #fff; font-weight: bold; color: var(--primary);}
 
-#editor-wrapper { position: relative; margin: 20px auto; width: fit-content; border: 2px solid #ccc; background: #fff; display: none; box-shadow: 0 10px 30px rgba(0,0,0,0.1); overflow: visible;}
+#editor-wrapper { position: relative; margin: 20px auto; width: fit-content; border: 2px solid #ccc; background: #fff; display: none; box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 95vw; overflow: visible; }
 #pdf-canvas { display: block; max-width: 100%; cursor: crosshair; }
 
-.controls { margin: 20px; display: none; }
-.button { padding:12px 25px; background:var(--primary); color:#fff; border:none; border-radius:8px; cursor:pointer; font-weight: bold; margin: 5px; }
+.controls { margin: 20px auto; width: 90%; max-width: 600px; display: none; background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+.button { padding:12px 25px; background:var(--primary); color:#fff; border:none; border-radius:8px; cursor:pointer; font-weight: bold; width: 100%; margin-top: 10px; transition: 0.3s;}
+.button:disabled { background: #ccc; cursor: not-allowed; }
 
-/* --- Text Field & Delete Button --- */
-.text-field-container { position: absolute; min-width: 80px; padding: 2px; cursor: move; }
-.text-field { border: 1px dashed var(--primary); background: rgba(147, 51, 234, 0.05); min-height: 20px; padding: 4px; font-size: 14px; outline: none; color: #000; width: 100%; box-sizing: border-box;}
-.delete-btn { 
-    position: absolute; top: -10px; right: -10px; background: #ef4444; color: white; 
-    width: 18px; height: 18px; border-radius: 50%; font-size: 12px; line-height: 18px; 
-    text-align: center; cursor: pointer; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
+.page-nav { margin-bottom: 10px; display: flex; justify-content: center; align-items: center; gap: 10px; font-weight: bold; }
+select { padding: 8px; border-radius: 5px; border: 1px solid var(--primary); outline: none; }
 
-.bottom-buttons{ margin: 20px 0 40px 0; }
-.bottom-link { padding:10px 22px; margin:5px; border-radius:8px; text-decoration:none; color:#fff; font-weight: bold; font-size: 13px; display: inline-block; }
+.text-field-container { position: absolute; min-width: 50px; padding: 2px; z-index: 5; }
+.text-field { border: 1px dashed var(--primary); background: rgba(147, 51, 234, 0.05); min-height: 18px; padding: 4px; font-size: 14px; outline: none; white-space: nowrap; }
+.delete-btn { position: absolute; top: -12px; right: -12px; background: #ef4444; color: white; width: 20px; height: 20px; border-radius: 50%; font-size: 14px; line-height: 20px; text-align: center; cursor: pointer; z-index: 10; border: 2px solid #fff; }
+
+#status-msg { margin-top: 10px; font-size: 13px; font-weight: bold; color: #9333ea; }
 </style>
 </head>
 <body>
 
 <div id="push-notification" onclick="window.open('https://easyusehub.blogspot.com', '_blank')">
-    <span class="close-push" onclick="event.stopPropagation(); this.parentElement.classList.remove('active');">&times;</span>
-    <img src="https://cdn-icons-png.flaticon.com/512/5968/5968313.png" alt="icon" style="width:45px; margin-right:12px;">
     <div class="push-text"><b>🚀 46+ Premium Free Tools!</b><p>100% Free & No Registration.</p></div>
 </div>
 
@@ -63,14 +58,8 @@ h1{margin:20px; color: #333; font-size: 24px;}
 <div id="upload-box" onclick="document.getElementById('fileInput').click()">📁 Click to Upload PDF (Max 30MB)</div>
 <input type="file" id="fileInput" accept="application/pdf" hidden>
 
-<div class="controls" id="controls">
-    <p style="font-size: 13px; color: #666;">💡 Click on PDF to add text. Use <b>X</b> to delete.</p>
-    <button class="button" onclick="savePdf()">💾 Save & Download PDF</button>
-</div>
-
 <div class="custom-ad-bridge" style="background: linear-gradient(135deg, #7c3aed, #9333ea);" onclick="window.open('https://easyusehub.blogspot.com/p/ultimate-calculators-hub.html', '_blank')">
     <span class="ad-title">🔢 Smart Online Calculators</span>
-    <p>Loan EMI, Age, BMI & Percentage Calculators - All in One Hub</p>
     <div class="ad-btn" style="background: #fff; color: #7c3aed;">Try Calculators</div>
 </div>
 
@@ -78,9 +67,18 @@ h1{margin:20px; color: #333; font-size: 24px;}
     <canvas id="pdf-canvas"></canvas>
 </div>
 
+<div class="controls" id="controls">
+    <div class="page-nav">
+        <span>Go to Page:</span>
+        <select id="page-select" onchange="changePage(this.value)"></select>
+        <span id="total-pages"></span>
+    </div>
+    <button id="saveBtn" class="button" onclick="savePdf()">📥 Download Edited PDF</button>
+    <p id="status-msg"></p>
+</div>
+
 <div class="custom-ad-bridge" style="background: linear-gradient(135deg, #059669, #10b981);" onclick="window.open('https://easyusehub.blogspot.com/p/image-compressor.html', '_blank')">
     <span class="ad-title">⚡ High-Speed Image Compressor</span>
-    <p>Optimize images without losing quality at EasyUseHub</p>
     <div class="ad-btn" style="background: #fff; color: #059669;">Compress Now</div>
 </div>
 
@@ -90,68 +88,137 @@ h1{margin:20px; color: #333; font-size: 24px;}
 </div>
 
 <script>
-let pdfDoc = null, pdfBytes = null;
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+
+let pdfDocJS = null, pdfBytes = null, currentNum = 1;
+let pageData = {};
 const canvas = document.getElementById('pdf-canvas'), ctx = canvas.getContext('2d'), wrapper = document.getElementById('editor-wrapper');
 
 document.getElementById('fileInput').onchange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    pdfBytes = await file.arrayBuffer();
-    const loadingTask = pdfjsLib.getDocument({data: pdfBytes});
-    pdfDoc = await loadingTask.promise;
-    const page = await pdfDoc.getPage(1);
-    const viewport = page.getViewport({scale: 1.5});
-    canvas.height = viewport.height; canvas.width = viewport.width;
-    await page.render({canvasContext: ctx, viewport: viewport}).promise;
-    document.getElementById('upload-box').style.display = 'none';
-    document.getElementById('controls').style.display = 'block';
-    wrapper.style.display = 'block';
-    setTimeout(() => document.getElementById('push-notification').classList.add('active'), 1500);
+    try {
+        pdfBytes = await file.arrayBuffer();
+        pdfDocJS = await pdfjsLib.getDocument({data: pdfBytes}).promise;
+        
+        const select = document.getElementById('page-select');
+        select.innerHTML = "";
+        for(let i=1; i<=pdfDocJS.numPages; i++) {
+            let opt = document.createElement('option');
+            opt.value = i; opt.innerText = i;
+            select.appendChild(opt);
+        }
+        document.getElementById('total-pages').innerText = `of ${pdfDocJS.numPages}`;
+        
+        renderPage(1);
+        document.getElementById('upload-box').style.display = 'none';
+        document.getElementById('controls').style.display = 'block';
+        wrapper.style.display = 'block';
+        setTimeout(() => document.getElementById('push-notification').classList.add('active'), 1500);
+    } catch (err) {
+        alert("Error loading PDF: " + err.message);
+    }
 };
 
-// Add Text Field with Delete Button
+async function renderPage(num) {
+    try {
+        saveCurrentFields();
+        currentNum = parseInt(num);
+        wrapper.querySelectorAll('.text-field-container').forEach(el => el.remove());
+        
+        const page = await pdfDocJS.getPage(currentNum);
+        const viewport = page.getViewport({scale: 1.5});
+        canvas.height = viewport.height; canvas.width = viewport.width;
+        
+        await page.render({canvasContext: ctx, viewport: viewport}).promise;
+        
+        if(pageData[currentNum]) {
+            pageData[currentNum].forEach(data => createField(data.x, data.y, data.text));
+        }
+    } catch (err) {
+        console.error("Render error:", err);
+    }
+}
+
+function changePage(num) { renderPage(num); }
+
+function saveCurrentFields() {
+    if(!pdfDocJS) return;
+    const fields = [];
+    document.querySelectorAll('.text-field-container').forEach(container => {
+        fields.push({
+            x: parseFloat(container.style.left),
+            y: parseFloat(container.style.top),
+            text: container.querySelector('.text-field').innerText
+        });
+    });
+    pageData[currentNum] = fields;
+}
+
 wrapper.onclick = (e) => {
     if(e.target.id !== 'pdf-canvas') return;
     const rect = canvas.getBoundingClientRect();
-    const x = e.clientX - rect.left, y = e.clientY - rect.top;
-    
+    createField(e.clientX - rect.left, e.clientY - rect.top, "");
+};
+
+function createField(x, y, text) {
     const container = document.createElement('div');
     container.className = 'text-field-container';
     container.style.left = x + 'px'; container.style.top = y + 'px';
     
-    const delBtn = document.createElement('div');
-    delBtn.className = 'delete-btn'; delBtn.innerHTML = '&times;';
-    delBtn.onclick = () => container.remove();
+    const del = document.createElement('div');
+    del.className = 'delete-btn'; del.innerHTML = '&times;';
+    del.onclick = (ev) => { ev.stopPropagation(); container.remove(); };
     
     const input = document.createElement('div');
-    input.className = 'text-field'; input.contentEditable = true;
+    input.className = 'text-field'; input.contentEditable = true; input.innerText = text;
     
-    container.appendChild(delBtn); container.appendChild(input);
+    container.appendChild(del); container.appendChild(input);
     wrapper.appendChild(container);
-    input.focus();
-};
+    if(!text) input.focus();
+}
 
 async function savePdf() {
-    const { PDFDocument, rgb } = PDFLib;
-    const existingPdfDoc = await PDFDocument.load(pdfBytes);
-    const firstPage = existingPdfDoc.getPages()[0];
-    const { width, height } = firstPage.getSize();
-    const scale = width / canvas.width;
+    const btn = document.getElementById('saveBtn');
+    const msg = document.getElementById('status-msg');
+    btn.disabled = true;
+    msg.innerText = "⏳ Processing Final PDF...";
     
-    document.querySelectorAll('.text-field-container').forEach(container => {
-        const text = container.querySelector('.text-field').innerText.trim();
-        if(!text) return;
-        const x = parseFloat(container.style.left) * scale;
-        const y = height - (parseFloat(container.style.top) * scale) - (14 * scale);
-        firstPage.drawText(text, { x, y, size: 12 * scale, color: rgb(0,0,0) });
-    });
-    
-    const savedBytes = await existingPdfDoc.save();
-    const blob = new Blob([savedBytes], {type: 'application/pdf'});
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = `EasyUseHub_Edited_${Date.now()}.pdf`;
-    link.click();
+    try {
+        saveCurrentFields();
+        const { PDFDocument, rgb } = PDFLib;
+        const finalDoc = await PDFDocument.load(pdfBytes);
+        const pages = finalDoc.getPages();
+        
+        for(let pIdx in pageData) {
+            const page = pages[pIdx - 1];
+            const { width, height } = page.getSize();
+            const scale = width / canvas.width;
+            
+            pageData[pIdx].forEach(f => {
+                if(!f.text.trim()) return;
+                page.drawText(f.text, {
+                    x: f.x * scale,
+                    y: height - (f.y * scale) - (14 * scale),
+                    size: 12 * scale,
+                    color: rgb(0,0,0)
+                });
+            });
+        }
+        
+        const bytes = await finalDoc.save();
+        const blob = new Blob([bytes], {type: 'application/pdf'});
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = `EasyUseHub_Edited_${Date.now()}.pdf`;
+        link.click();
+        msg.innerText = "✅ Download Complete!";
+    } catch (err) {
+        alert("Error saving PDF: " + err.message);
+        msg.innerText = "❌ Error Occurred.";
+    } finally {
+        btn.disabled = false;
+    }
 }
 </script>
 </body>
