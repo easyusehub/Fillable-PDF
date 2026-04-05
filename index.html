@@ -2,16 +2,16 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>📂 Fillable PDF Editor | EasyUseHub</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes">
+<title>📂 Ultimate PDF Editor | EasyUseHub</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
 
 <style>
-:root { --primary: #9333ea; --bg: #f5f7fa; }
-body, html{ margin:0; padding:0; font-family:Arial, sans-serif; background:var(--bg); text-align:center; overflow-x: hidden;}
+:root { --primary: #9333ea; --bg: #f1f5f9; }
+body, html{ margin:0; padding:0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:var(--bg); text-align:center; overflow-x: hidden;}
 
-/* --- 🔥 Ultra Compact Push Notification --- */
+/* --- Compact Push Ad --- */
 #push-notification {
     position: fixed; bottom: -120px; right: 20px; width: 260px; background: #fff; border-radius: 8px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.15); display: flex; align-items: center; padding: 8px 12px;
@@ -19,62 +19,70 @@ body, html{ margin:0; padding:0; font-family:Arial, sans-serif; background:var(-
 }
 #push-notification.active { bottom: 20px; }
 #push-notification img { width: 35px; height: 35px; border-radius: 6px; margin-right: 10px; }
-.push-text b { font-size: 12px; color: #222; display: block; }
-.push-text p { font-size: 10px; color: #666; margin: 0; }
-.close-push { position: absolute; top: 2px; right: 6px; font-size: 16px; cursor: pointer; color: #aaa; }
 
-/* --- Custom Ad Bridges --- */
+/* --- Ad Bridges --- */
 .custom-ad-bridge {
     background: linear-gradient(135deg, #1e3a8a, #2563eb);
-    color: white; padding: 15px; margin: 15px auto; border-radius: 10px; cursor: pointer;
-    width: 90%; max-width: 600px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: 0.2s;
+    color: white; padding: 12px; margin: 10px auto; border-radius: 10px; cursor: pointer;
+    width: 90%; max-width: 600px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
-.ad-title { font-size: 16px; font-weight: bold; margin-bottom: 3px; display: block; }
-.ad-btn { background: #fbbf24; color: #000; padding: 4px 12px; border-radius: 4px; font-weight: bold; font-size: 10px; margin-top: 5px; display: inline-block; text-transform: uppercase; }
+.ad-title { font-size: 14px; font-weight: bold; }
 
-/* --- Editor UI --- */
-#editor-container { width: 95%; max-width: 1000px; margin: 20px auto; background: #fff; border: 1px solid #ddd; border-radius: 12px; overflow: hidden; display: none; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-#toolbar { background: #f1f5f9; padding: 10px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; }
-#pdf-screen { height: 600px; overflow: auto; background: #525659; position: relative; padding: 20px 0; }
-#pdf-canvas { box-shadow: 0 0 20px rgba(0,0,0,0.4); margin: 0 auto; display: block; cursor: crosshair; background: #fff; }
+/* --- Advanced Editor UI --- */
+#editor-container { width: 98%; max-width: 1100px; margin: 10px auto; background: #fff; border-radius: 12px; display: none; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 1px solid #ddd;}
+#toolbar { background: #ffffff; padding: 10px; border-bottom: 2px solid #eee; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; sticky; top: 0; z-index: 50; }
 
-/* Text Input Styling */
-.input-field-wrap { position: absolute; min-width: 50px; min-height: 25px; border: 1px dashed var(--primary); background: rgba(255,255,255,0.7); cursor: move; }
-.input-box { width: 100%; height: 100%; border: none; background: transparent; outline: none; padding: 2px; font-size: 14px; color: #000; overflow: hidden; }
-.field-del { position: absolute; top: -20px; right: 0; background: #ef4444; color: white; width: 18px; height: 18px; border-radius: 50%; font-size: 12px; line-height: 18px; text-align: center; cursor: pointer; }
+.control-group { display: flex; align-items: center; gap: 8px; background: #f8fafc; padding: 5px 10px; border-radius: 8px; border: 1px solid #e2e8f0; }
+#pdf-screen { height: 70vh; overflow: auto; background: #525659; position: relative; padding: 10px; touch-action: pan-x pan-y; } /* Touch Friendly */
 
-h1 { margin: 20px; color: #333; font-size: 24px; }
-#upload-box { border: 2px dashed var(--primary); border-radius: 15px; padding: 60px 20px; width: 85%; max-width: 500px; cursor: pointer; margin: 30px auto; background: #fff; font-weight: bold; color: var(--primary); font-size: 18px; }
-.action-btn { padding: 10px 20px; border: none; border-radius: 6px; background: var(--primary); color: #fff; font-weight: bold; cursor: pointer; }
+/* Text Field UI */
+.field-container { position: absolute; min-width: 50px; z-index: 100; border: 1px dashed var(--primary); background: rgba(255,255,255,0.4); cursor: move; padding: 2px; border-radius: 4px;}
+.field-tools { position: absolute; top: -35px; left: 0; display: none; background: white; padding: 5px; border-radius: 5px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); gap: 5px; }
+.field-container:hover .field-tools, .field-container:focus-within .field-tools { display: flex; }
 
-.bottom-buttons { margin: 30px 0 50px 0; }
-.bottom-link { padding: 12px 25px; margin: 5px; border-radius: 8px; text-decoration: none; color: #fff; font-weight: bold; font-size: 14px; display: inline-block; }
+.input-box { border: none; background: transparent; outline: none; padding: 2px; font-family: inherit; font-weight: 500; min-width: 20px; display: block; }
+.del-btn { background: #ef4444; color: white; border: none; border-radius: 3px; cursor: pointer; padding: 0 5px; }
+
+/* Global Styling */
+#upload-box { border: 3px dashed var(--primary); border-radius: 20px; padding: 60px 20px; width: 85%; max-width: 400px; cursor: pointer; margin: 40px auto; background: #fff; color: var(--primary); font-weight: bold; font-size: 18px; box-shadow: 0 10px 20px rgba(147, 51, 234, 0.1); }
+.action-btn { padding: 8px 15px; border: none; border-radius: 6px; background: var(--primary); color: #fff; font-weight: bold; cursor: pointer; font-size: 13px; }
+select, input[type="number"] { padding: 5px; border-radius: 4px; border: 1px solid #ccc; font-size: 12px; }
+
+.bottom-buttons { margin-bottom: 50px; }
+.bottom-link { padding: 10px 20px; margin: 5px; border-radius: 8px; text-decoration: none; color: #fff; font-weight: bold; font-size: 12px; display: inline-block; }
 </style>
 </head>
 <body>
 
 <div id="push-notification" onclick="window.open('https://easyusehub.blogspot.com', '_blank')">
-    <span class="close-push" onclick="event.stopPropagation(); document.getElementById('push-notification').classList.remove('active');">&times;</span>
     <img src="https://cdn-icons-png.flaticon.com/512/5968/5968313.png" alt="icon">
-    <div class="push-text"><b>🚀 46+ Premium Tools Ready!</b><p>PDF, Calculators & More - 100% Free</p></div>
+    <div class="push-text"><b>🚀 EasyUseHub - 46+ Tools</b><p>Free Premium Web Utilities</p></div>
 </div>
 
-<h1>📂 Fillable PDF Editor</h1>
+<header style="padding: 15px; background: #fff;">
+    <h2 style="margin:0; font-size: 1.2rem; color: #333;">📂 EasyUseHub PDF Editor</h2>
+</header>
 
 <div class="custom-ad-bridge" onclick="window.open('https://easyusehub.blogspot.com', '_blank')">
-    <span class="ad-title">🚀 Try 46+ Premium Free Web Tools!</span>
-    <p>PDF Tools, 16+ Calculators, Age & BMI Tracker - 100% Free</p>
-    <div class="ad-btn">Open EasyUseHub</div>
+    <span class="ad-title">🚀 Open 46+ Premium Free Tools</span>
 </div>
 
-<div id="upload-box" onclick="document.getElementById('fileInput').click()">📁 Click to Upload PDF & Start Filling</div>
+<div id="upload-box" onclick="document.getElementById('fileInput').click()">📁 Select PDF to Start</div>
 <input type="file" id="fileInput" accept="application/pdf" hidden>
 
 <div id="editor-container">
     <div id="toolbar">
-        <div><span style="font-size:13px; font-weight:bold;">EasyUseHub Editor</span></div>
-        <button class="action-btn" onclick="savePdf()">📥 Download Edited PDF</button>
+        <div class="control-group">
+            <span>Page:</span>
+            <select id="page-select" onchange="changePage(this.value)"></select>
+            <span id="page-count" style="font-size: 12px; color: #666;"></span>
+        </div>
+        
+        <div class="control-group">
+            <button class="action-btn" onclick="savePdf()">📥 Download PDF</button>
+        </div>
     </div>
+
     <div id="pdf-screen">
         <div id="canvas-wrapper" style="position: relative; width: fit-content; margin: 0 auto;">
             <canvas id="pdf-canvas"></canvas>
@@ -82,25 +90,21 @@ h1 { margin: 20px; color: #333; font-size: 24px; }
     </div>
 </div>
 
-<div class="custom-ad-bridge" style="background: linear-gradient(135deg, #7c3aed, #9333ea);" onclick="window.open('https://easyusehub.blogspot.com/p/ultimate-calculators-hub.html', '_blank')">
+<div class="custom-ad-bridge" style="background: linear-gradient(135deg, #7c3aed, #9333ea);">
     <span class="ad-title">🔢 Smart Online Calculators</span>
-    <p>Loan EMI, Age, BMI & Percentage Calculators - All in One Hub</p>
-    <div class="ad-btn" style="background: #fff; color: #7c3aed;">Try Calculators</div>
 </div>
 
-<div class="custom-ad-bridge" style="background: linear-gradient(135deg, #059669, #10b981);" onclick="window.open('https://easyusehub.blogspot.com/p/image-compressor.html', '_blank')">
+<div class="custom-ad-bridge" style="background: linear-gradient(135deg, #059669, #10b981);">
     <span class="ad-title">⚡ High-Speed Image Compressor</span>
-    <p>Optimize images without losing quality at EasyUseHub</p>
-    <div class="ad-btn" style="background: #fff; color: #059669;">Compress Now</div>
 </div>
 
 <div class="bottom-buttons">
-    <a href="https://easyusehub.blogspot.com/p/free-pdf-tools-online.html" class="bottom-link" style="background:#10b981;">📂 All PDF Tools</a>
-    <a href="https://easyusehub.blogspot.com/" class="bottom-link" style="background:#f59e0b;">🏠 Home</a>
+    <a href="https://easyusehub.blogspot.com/p/free-pdf-tools-online.html" class="bottom-link" style="background:#10b981;">All Tools</a>
+    <a href="https://easyusehub.blogspot.com/" class="bottom-link" style="background:#f59e0b;">Home</a>
 </div>
 
 <script>
-let pdfDocJS = null, pdfBytes = null;
+let pdfDocJS = null, pdfBytes = null, currentNum = 1, pageFields = {};
 const canvas = document.getElementById('pdf-canvas'), ctx = canvas.getContext('2d'), wrapper = document.getElementById('canvas-wrapper');
 
 document.getElementById('fileInput').onchange = async (e) => {
@@ -109,56 +113,127 @@ document.getElementById('fileInput').onchange = async (e) => {
     pdfBytes = await file.arrayBuffer();
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
     pdfDocJS = await pdfjsLib.getDocument({data: pdfBytes}).promise;
+
+    const select = document.getElementById('page-select');
+    select.innerHTML = "";
+    for(let i=1; i<=pdfDocJS.numPages; i++) {
+        let opt = document.createElement('option'); opt.value = i; opt.innerText = i; select.appendChild(opt);
+    }
+    document.getElementById('page-count').innerText = `of ${pdfDocJS.numPages}`;
+    
     renderPage(1);
     document.getElementById('upload-box').style.display = 'none';
     document.getElementById('editor-container').style.display = 'block';
-    setTimeout(() => { document.getElementById('push-notification').classList.add('active'); }, 2000);
+    setTimeout(() => document.getElementById('push-notification').classList.add('active'), 1500);
 };
 
 async function renderPage(num) {
-    const page = await pdfDocJS.getPage(num);
-    const viewport = page.getViewport({scale: 1.5});
+    saveCurrentPageFields();
+    currentNum = num;
+    wrapper.querySelectorAll('.field-container').forEach(el => el.remove());
+
+    const page = await pdfDocJS.getPage(parseInt(num));
+    const viewport = page.getViewport({scale: 1.5}); // Default Zoom level
     canvas.height = viewport.height; canvas.width = viewport.width;
     await page.render({canvasContext: ctx, viewport: viewport}).promise;
+
+    if(pageFields[num]) {
+        pageFields[num].forEach(f => createField(f.x, f.y, f.text, f.color, f.size));
+    }
 }
 
-// ক্লিক করলে টেক্সট বক্স তৈরি হবে
+function changePage(val) { renderPage(val); }
+
+function saveCurrentPageFields() {
+    if(!pdfDocJS) return;
+    const fields = [];
+    document.querySelectorAll('.field-container').forEach(c => {
+        fields.push({
+            x: parseFloat(c.style.left), y: parseFloat(c.style.top),
+            text: c.querySelector('.input-box').innerText,
+            color: c.querySelector('.t-color').value,
+            size: c.querySelector('.t-size').value
+        });
+    });
+    pageFields[currentNum] = fields;
+}
+
 wrapper.onclick = (e) => {
     if(e.target.id !== 'pdf-canvas') return;
     const rect = canvas.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    
-    const div = document.createElement('div');
-    div.className = 'input-field-wrap';
-    div.style.left = (x - 20) + 'px';
-    div.style.top = (y - 10) + 'px';
-    div.innerHTML = `<div class="field-del" onclick="this.parentElement.remove()">×</div>
-                     <div class="input-box" contenteditable="true" focus>Type here...</div>`;
-    wrapper.appendChild(div);
+    createField(e.clientX - rect.left, e.clientY - rect.top, "", "#000000", 14);
 };
 
+function createField(x, y, text, color, size) {
+    const container = document.createElement('div');
+    container.className = 'field-container';
+    container.style.left = x + 'px'; container.style.top = y + 'px';
+
+    const tools = document.createElement('div');
+    tools.className = 'field-tools';
+    tools.innerHTML = `
+        <input type="color" class="t-color" value="${color}" title="Color">
+        <input type="number" class="t-size" value="${size}" min="8" max="72" style="width:40px;" title="Size">
+        <button class="del-btn" onclick="this.parentElement.parentElement.remove()">×</button>
+    `;
+
+    const input = document.createElement('div');
+    input.className = 'input-box';
+    input.contentEditable = true;
+    input.innerText = text || "Type here...";
+    input.style.color = color;
+    input.style.fontSize = size + "px";
+
+    // Listen to changes
+    tools.querySelector('.t-color').oninput = (e) => { input.style.color = e.target.value; };
+    tools.querySelector('.t-size').oninput = (e) => { input.style.fontSize = e.target.value + "px"; };
+
+    // Mobile Draggable
+    let isDragging = false;
+    container.onmousedown = container.ontouchstart = () => isDragging = true;
+    window.onmousemove = window.ontouchmove = (e) => {
+        if(!isDragging) return;
+        const rect = canvas.getBoundingClientRect();
+        const touch = e.touches ? e.touches[0] : e;
+        container.style.left = (touch.clientX - rect.left - 20) + 'px';
+        container.style.top = (touch.clientY - rect.top - 10) + 'px';
+    };
+    window.onmouseup = window.ontouchend = () => isDragging = false;
+
+    container.appendChild(tools); container.appendChild(input);
+    wrapper.appendChild(container);
+}
+
 async function savePdf() {
+    saveCurrentPageFields();
     const { PDFDocument, rgb, StandardFonts } = PDFLib;
     const finalDoc = await PDFDocument.load(pdfBytes);
     const font = await finalDoc.embedFont(StandardFonts.Helvetica);
-    const page = finalDoc.getPages()[0];
-    const { width, height } = page.getSize();
-    const scale = width / canvas.width;
+    const pages = finalDoc.getPages();
 
-    document.querySelectorAll('.input-field-wrap').forEach(el => {
-        const text = el.querySelector('.input-box').innerText;
-        if(text && text !== "Type here...") {
-            const x = parseFloat(el.style.left) * scale;
-            const y = height - (parseFloat(el.style.top) * scale) - (12 * scale);
-            page.drawText(text, { x, y, size: 12 * scale, font, color: rgb(0, 0, 0) });
-        }
-    });
+    for(let pIdx in pageFields) {
+        const page = pages[pIdx - 1];
+        const { width, height } = page.getSize();
+        const scale = width / canvas.width;
+
+        pageFields[pIdx].forEach(f => {
+            if(!f.text.trim() || f.text === "Type here...") return;
+            const hex = f.color.replace('#','');
+            const r = parseInt(hex.substring(0,2), 16)/255;
+            const g = parseInt(hex.substring(2,4), 16)/255;
+            const b = parseInt(hex.substring(4,6), 16)/255;
+
+            page.drawText(f.text, {
+                x: f.x * scale, y: height - (f.y * scale) - (f.size * scale),
+                size: parseInt(f.size) * scale, font, color: rgb(r, g, b)
+            });
+        });
+    }
 
     const bytes = await finalDoc.save();
     const link = document.createElement('a');
     link.href = URL.createObjectURL(new Blob([bytes], {type: 'application/pdf'}));
-    link.download = "EasyUseHub_Edited.pdf";
+    link.download = `EasyUseHub_Edited.pdf`;
     link.click();
 }
 </script>
