@@ -2,56 +2,44 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<title>📂 Fillable PDF Editor – EasyUseHub</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>📂 Fillable PDF Editor | EasyUseHub</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
-<script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
-
 <style>
 :root { --primary: #9333ea; --bg: #f5f7fa; }
-body, html{ margin:0; padding:0; font-family:Arial, sans-serif; background:var(--bg); text-align:center; position: relative; overflow-x: hidden;}
+body{ margin:0; font-family:Arial, sans-serif; background:var(--bg); text-align:center; position: relative; overflow-x: hidden; }
+header{ background:#fff; padding:15px; box-shadow:0 2px 5px rgba(0,0,0,.1); }
+.container{ width:95%; max-width:1000px; margin:20px auto; }
 
-/* --- তোর সেভ করা কাস্টম অ্যাড ব্রিজ --- */
-.custom-ad-bridge {
-    background: linear-gradient(135deg, #1e3a8a, #2563eb);
-    color: white; padding: 12px; margin: 15px auto; border-radius: 10px; cursor: pointer;
-    width: 90%; max-width: 600px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: 0.2s;
-}
-.ad-title { font-size: 15px; font-weight: bold; margin-bottom: 3px; display: block; }
-.ad-btn { background: #fbbf24; color: #000; padding: 5px 12px; border-radius: 4px; font-weight: bold; text-transform: uppercase; display: inline-block; font-size: 10px; margin-top: 4px; }
-
-/* --- তোর সেভ করা পুশ নোটিফিকেশন --- */
+/* --- 🔥 Ultra Compact Push Notification --- */
 #push-notification {
-    position: fixed; bottom: -180px; right: 20px; width: 280px; background: #fff; border-radius: 10px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.15); display: flex; align-items: center; padding: 12px;
-    z-index: 10000; transition: bottom 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55); cursor: pointer; border-left: 5px solid #2563eb; text-align: left;
+    position: fixed; bottom: -120px; right: 20px; width: 260px; background: #fff; border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15); display: flex; align-items: center; padding: 8px 12px;
+    z-index: 10000; transition: bottom 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55); cursor: pointer; border-left: 4px solid #2563eb; text-align: left;
 }
 #push-notification.active { bottom: 20px; }
-#push-notification img { width: 45px; height: 45px; border-radius: 8px; margin-right: 12px; }
-.close-push { position: absolute; top: 5px; right: 8px; font-size: 18px; cursor: pointer; color: #aaa; }
+#push-notification img { width: 35px; height: 35px; border-radius: 6px; margin-right: 10px; }
+.push-text b { font-size: 12px; color: #222; display: block; }
+.push-text p { font-size: 10px; color: #666; margin: 0; }
+.close-push { position: absolute; top: 2px; right: 6px; font-size: 16px; cursor: pointer; color: #aaa; }
 
-/* --- এডিটর ফ্রেম ডিজাইন (Iframe Look) --- */
-#editor-container {
-    width: 95%; max-width: 1000px; margin: 20px auto; background: #fff; border: 1px solid #ddd;
-    border-radius: 12px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.1); display: none;
+/* --- Custom Ad Bridges --- */
+.custom-ad-bridge {
+    background: linear-gradient(135deg, #1e3a8a, #2563eb);
+    color: white; padding: 15px; margin: 15px auto; border-radius: 10px; cursor: pointer;
+    width: 90%; max-width: 600px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: 0.2s;
 }
-#editor-toolbar { background: #f8fafc; padding: 15px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
-#pdf-frame-area { height: 600px; overflow: auto; background: #525659; position: relative; padding: 20px 0; }
-#pdf-canvas { box-shadow: 0 0 20px rgba(0,0,0,0.3); margin: 0 auto; display: block; cursor: crosshair; }
+.custom-ad-bridge:hover { transform: scale(1.01); }
+.ad-title { font-size: 16px; font-weight: bold; margin-bottom: 3px; display: block; }
+.custom-ad-bridge p { font-size: 12px; margin: 3px 0; opacity: 0.9; }
+.ad-btn { background: #fbbf24; color: #000; padding: 5px 12px; border-radius: 4px; font-weight: bold; text-transform: uppercase; display: inline-block; font-size: 10px; margin-top: 5px; }
 
-/* টেক্সট ফিল্ড টুলস */
-.text-field-container { position: absolute; min-width: 60px; min-height: 30px; z-index: 1000; border: 1px dashed var(--primary); background: rgba(255, 255, 255, 0.8); cursor: move; resize: both; overflow: visible; }
-.text-field { width: 100%; height: 100%; padding: 4px; font-size: 14px; outline: none; border: none; background: transparent; word-break: break-all; color: #000; }
-.field-tools { position: absolute; top: -35px; left: 0; display: flex; gap: 4px; background: #fff; padding: 4px; border-radius: 4px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); pointer-events: auto; }
-.color-picker { width: 22px; height: 22px; border: 1px solid #ddd; cursor: pointer; padding: 0; }
-.delete-btn { background: #ef4444; color: white; width: 22px; height: 22px; border-radius: 4px; font-size: 16px; line-height: 20px; text-align: center; cursor: pointer; }
+.upload-btn{ display:inline-block; padding:15px 30px; background:var(--primary); color:#fff; border-radius:8px; cursor:pointer; margin:20px 0; font-weight: bold; box-shadow: 0 4px 12px rgba(147, 51, 234, 0.3); }
+#widgetArea { min-height: 400px; background: #fff; border-radius: 12px; border: 1px solid #ddd; overflow: hidden; margin-top: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
 
-h1 { margin: 20px; color: #333; font-size: 26px; }
-#upload-box { border: 2px dashed var(--primary); border-radius: 15px; padding: 50px 20px; width: 85%; max-width: 500px; cursor: pointer; margin: 30px auto; background: #fff; font-weight: bold; color: var(--primary); font-size: 18px; }
-.action-btn { padding: 10px 20px; border: none; border-radius: 6px; background: var(--primary); color: #fff; font-weight: bold; cursor: pointer; }
-
-.bottom-buttons { margin: 30px 0 50px 0; }
-.bottom-link { padding: 12px 25px; margin: 5px; border-radius: 8px; text-decoration: none; color: #fff; font-weight: bold; font-size: 14px; display: inline-block; }
+.buttons{ margin: 20px 0 40px 0; }
+.buttons button{ padding:10px 22px; margin:5px; border:none; border-radius:8px; cursor:pointer; color:#fff; font-weight: bold; font-size: 13px; }
+.tools{ background:#10b981; }
+.home{ background:#f59e0b; }
 </style>
 </head>
 <body>
@@ -59,10 +47,17 @@ h1 { margin: 20px; color: #333; font-size: 26px; }
 <div id="push-notification" onclick="window.open('https://easyusehub.blogspot.com', '_blank')">
     <span class="close-push" onclick="event.stopPropagation(); document.getElementById('push-notification').classList.remove('active');">&times;</span>
     <img src="https://cdn-icons-png.flaticon.com/512/5968/5968313.png" alt="icon">
-    <div class="push-text"><b>🚀 46+ Premium Free Tools!</b><p>29+ PDF Tool, 16+ Calculator & More</p></div>
+    <div class="push-text">
+        <b>🚀 46+ Premium Tools Ready!</b>
+        <p>PDF, Calculators & More - 100% Free</p>
+    </div>
 </div>
 
-<h1>📂 Fillable PDF Editor</h1>
+<header>
+<h2>📂 Fillable PDF Editor – EasyUseHub</h2>
+</header>
+
+<div class="container">
 
 <div class="custom-ad-bridge" onclick="window.open('https://easyusehub.blogspot.com', '_blank')">
     <span class="ad-title">🚀 Try 46+ Premium Free Web Tools!</span>
@@ -70,23 +65,14 @@ h1 { margin: 20px; color: #333; font-size: 26px; }
     <div class="ad-btn">Open EasyUseHub</div>
 </div>
 
-<div id="upload-box" onclick="document.getElementById('fileInput').click()">📁 Click to Upload PDF (Max 20MB)</div>
-<input type="file" id="fileInput" accept="application/pdf" hidden>
+<div id="upload-box-area">
+    <label class="upload-btn" onclick="startProcess()">
+        📁 Click to Start PDF Editor
+    </label>
+</div>
 
-<div id="editor-container">
-    <div id="editor-toolbar">
-        <div>
-            <strong>Page:</strong> 
-            <select id="page-select" onchange="changePage(this.value)" style="padding:5px; border-radius:4px;"></select>
-            <span id="total-pages"></span>
-        </div>
-        <button class="action-btn" onclick="savePdf()">📥 Download Edited PDF</button>
-    </div>
-    <div id="pdf-frame-area">
-        <div id="wrapper-inner" style="position: relative; width: fit-content; margin: 0 auto;">
-            <canvas id="pdf-canvas"></canvas>
-        </div>
-    </div>
+<div id="widgetArea">
+    <p style="padding-top: 150px; color: #999;">The editor will load here after clicking the button.</p>
 </div>
 
 <div class="custom-ad-bridge" style="background: linear-gradient(135deg, #7c3aed, #9333ea);" onclick="window.open('https://easyusehub.blogspot.com/p/ultimate-calculators-hub.html', '_blank')">
@@ -101,129 +87,32 @@ h1 { margin: 20px; color: #333; font-size: 26px; }
     <div class="ad-btn" style="background: #fff; color: #059669;">Compress Now</div>
 </div>
 
-<div class="bottom-buttons">
-    <a href="https://easyusehub.blogspot.com/p/free-pdf-tools-online.html" class="bottom-link" style="background:#10b981;">📂 All PDF Tools</a>
-    <a href="https://easyusehub.blogspot.com/" class="bottom-link" style="background:#f59e0b;">🏠 Home</a>
+<div class="buttons">
+    <button class="tools" onclick="window.location.href='https://easyusehub.blogspot.com/p/free-pdf-tools-online.html'">📂 All PDF Tools</button>
+    <button class="home" onclick="window.location.href='https://easyusehub.blogspot.com'">🏠 Home</button>
 </div>
 
+</div>
+
+<script src="https://tools.pdf24.org/static/js/widget.js"></script>
 <script>
-let pdfDocJS = null, pdfBytes = null, currentNum = 1, pageData = {}; 
-const canvas = document.getElementById('pdf-canvas'), ctx = canvas.getContext('2d'), wrapper = document.getElementById('wrapper-inner');
-
-document.getElementById('fileInput').onchange = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    if (file.size > 20 * 1024 * 1024) { alert("❌ Max 20MB limit exceeded!"); return; }
-    
-    pdfBytes = await file.arrayBuffer();
-    pdfDocJS = await pdfjsLib.getDocument({data: pdfBytes}).promise;
-    
-    const select = document.getElementById('page-select');
-    select.innerHTML = "";
-    for(let i=1; i<=pdfDocJS.numPages; i++) {
-        let opt = document.createElement('option');
-        opt.value = i; opt.innerText = i;
-        select.appendChild(opt);
-    }
-    document.getElementById('total-pages').innerText = `of ${pdfDocJS.numPages}`;
-    renderPage(1);
-    
-    document.getElementById('upload-box').style.display = 'none';
-    document.getElementById('editor-container').style.display = 'block';
-    setTimeout(() => { document.getElementById('push-notification').classList.add('active'); }, 1500);
-};
-
-async function renderPage(num) {
-    saveCurrentFields();
-    currentNum = num;
-    wrapper.querySelectorAll('.text-field-container').forEach(el => el.remove());
-    const page = await pdfDocJS.getPage(parseInt(num));
-    const viewport = page.getViewport({scale: 1.5});
-    canvas.height = viewport.height; canvas.width = viewport.width;
-    await page.render({canvasContext: ctx, viewport: viewport}).promise;
-    if(pageData[num]) pageData[num].forEach(d => createField(d.x, d.y, d.text, d.color, d.w, d.h));
-}
-
-function changePage(num) { renderPage(num); }
-
-function saveCurrentFields() {
-    if(!pdfDocJS) return;
-    const fields = [];
-    document.querySelectorAll('.text-field-container').forEach(c => {
-        fields.push({
-            x: parseFloat(c.style.left), y: parseFloat(c.style.top),
-            w: c.offsetWidth, h: c.offsetHeight,
-            text: c.querySelector('.text-field').innerText,
-            color: c.querySelector('.color-picker').value
-        });
+function startProcess() {
+    // Fillable PDF Editor Widget (edit-pdf)
+    pdf24.loadWidget('edit-pdf', {
+        containerId: 'widgetArea',
+        langCode: 'en',
+        widgetConfig: { theme: 'lightTheme' }
     });
-    pageData[currentNum] = fields;
-}
 
-wrapper.onclick = (e) => {
-    if(e.target.id !== 'pdf-canvas') return;
-    const rect = canvas.getBoundingClientRect();
-    createField(e.clientX - rect.left, e.clientY - rect.top, "", "#000000", 120, 35);
-};
+    // Hide upload button after loading
+    document.getElementById('upload-box-area').style.display = 'none';
 
-function createField(x, y, text, color, w, h) {
-    const container = document.createElement('div');
-    container.className = 'text-field-container';
-    container.style.left = x + 'px'; container.style.top = y + 'px';
-    container.style.width = w + 'px'; container.style.height = h + 'px';
-    
-    const tools = document.createElement('div'); tools.className = 'field-tools';
-    const cp = document.createElement('input'); cp.type = 'color'; cp.className = 'color-picker'; cp.value = color || "#000000";
-    cp.oninput = () => { input.style.color = cp.value; };
-    const del = document.createElement('div'); del.className = 'delete-btn'; del.innerHTML = '&times;';
-    del.onclick = (ev) => { ev.stopPropagation(); container.remove(); };
-    
-    const input = document.createElement('div'); input.className = 'text-field'; input.contentEditable = true; 
-    input.innerText = text; input.style.color = cp.value;
-    
-    let isDrag = false;
-    container.onmousedown = (e) => { if(e.target === container || e.target === input) isDrag = true; };
-    window.onmousemove = (e) => {
-        if(!isDrag) return;
-        const rect = canvas.getBoundingClientRect();
-        container.style.left = (e.clientX - rect.left - (container.offsetWidth/2)) + 'px';
-        container.style.top = (e.clientY - rect.top - 15) + 'px';
-    };
-    window.onmouseup = () => isDrag = false;
-
-    tools.appendChild(cp); tools.appendChild(del);
-    container.appendChild(tools); container.appendChild(input);
-    wrapper.appendChild(container);
-    if(!text) input.focus();
-}
-
-async function savePdf() {
-    saveCurrentFields();
-    const { PDFDocument, rgb, StandardFonts } = PDFLib;
-    const finalDoc = await PDFDocument.load(pdfBytes);
-    const font = await finalDoc.embedFont(StandardFonts.Helvetica);
-    const pages = finalDoc.getPages();
-    
-    for(let pIdx in pageData) {
-        const page = pages[pIdx - 1];
-        const { width, height } = page.getSize();
-        const scale = width / canvas.width;
-        pageData[pIdx].forEach(f => {
-            if(!f.text.trim()) return;
-            const hex = f.color.replace('#','');
-            const r = parseInt(hex.substring(0,2), 16)/255, g = parseInt(hex.substring(2,4), 16)/255, b = parseInt(hex.substring(4,6), 16)/255;
-            page.drawText(f.text, {
-                x: f.x * scale, y: height - (f.y * scale) - (14 * scale),
-                size: 12 * scale, font: font, color: rgb(r, g, b), maxWidth: f.w * scale
-            });
-        });
-    }
-    const bytes = await finalDoc.save();
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(new Blob([bytes], {type: 'application/pdf'}));
-    link.download = `EasyUseHub_Edited.pdf`;
-    link.click();
+    // Show Compact Push Ad
+    setTimeout(function() {
+        document.getElementById('push-notification').classList.add('active');
+    }, 1500);
 }
 </script>
+
 </body>
 </html>
