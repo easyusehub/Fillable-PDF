@@ -10,7 +10,7 @@ body{ margin:0; font-family:Arial, sans-serif; background:var(--bg); text-align:
 header{ background:#fff; padding:15px; box-shadow:0 2px 5px rgba(0,0,0,.1); }
 .container{ width:95%; max-width:1000px; margin:20px auto; }
 
-/* --- 🔥 Ultra Compact Push Notification --- */
+/* --- Compact Push Notification --- */
 #push-notification {
     position: fixed; bottom: -120px; right: 20px; width: 260px; background: #fff; border-radius: 8px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.15); display: flex; align-items: center; padding: 8px 12px;
@@ -28,13 +28,17 @@ header{ background:#fff; padding:15px; box-shadow:0 2px 5px rgba(0,0,0,.1); }
     color: white; padding: 15px; margin: 15px auto; border-radius: 10px; cursor: pointer;
     width: 90%; max-width: 600px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: 0.2s;
 }
-.custom-ad-bridge:hover { transform: scale(1.01); }
 .ad-title { font-size: 16px; font-weight: bold; margin-bottom: 3px; display: block; }
-.custom-ad-bridge p { font-size: 12px; margin: 3px 0; opacity: 0.9; }
 .ad-btn { background: #fbbf24; color: #000; padding: 5px 12px; border-radius: 4px; font-weight: bold; text-transform: uppercase; display: inline-block; font-size: 10px; margin-top: 5px; }
 
-.upload-btn{ display:inline-block; padding:15px 30px; background:var(--primary); color:#fff; border-radius:8px; cursor:pointer; margin:20px 0; font-weight: bold; box-shadow: 0 4px 12px rgba(147, 51, 234, 0.3); }
-#widgetArea { min-height: 400px; background: #fff; border-radius: 12px; border: 1px solid #ddd; overflow: hidden; margin-top: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+/* --- Iframe Tool UI --- */
+#editor-container {
+    width: 100%; height: 600px; background: #fff; border-radius: 12px; border: 1px solid #ddd;
+    overflow: hidden; margin-top: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); display: none;
+}
+iframe { width: 100%; height: 100%; border: none; }
+
+.upload-btn{ display:inline-block; padding:15px 30px; background:var(--primary); color:#fff; border-radius:8px; cursor:pointer; margin:20px 0; font-weight: bold; border:none; font-size: 16px; }
 
 .buttons{ margin: 20px 0 40px 0; }
 .buttons button{ padding:10px 22px; margin:5px; border:none; border-radius:8px; cursor:pointer; color:#fff; font-weight: bold; font-size: 13px; }
@@ -47,37 +51,30 @@ header{ background:#fff; padding:15px; box-shadow:0 2px 5px rgba(0,0,0,.1); }
 <div id="push-notification" onclick="window.open('https://easyusehub.blogspot.com', '_blank')">
     <span class="close-push" onclick="event.stopPropagation(); document.getElementById('push-notification').classList.remove('active');">&times;</span>
     <img src="https://cdn-icons-png.flaticon.com/512/5968/5968313.png" alt="icon">
-    <div class="push-text">
-        <b>🚀 46+ Premium Tools Ready!</b>
-        <p>PDF, Calculators & More - 100% Free</p>
-    </div>
+    <div class="push-text"><b>🚀 46+ Premium Tools Ready!</b><p>PDF, Calculators & More - 100% Free</p></div>
 </div>
 
-<header>
-<h2>📂 Fillable PDF Editor – EasyUseHub</h2>
-</header>
+<header><h2>📂 Fillable PDF Editor – EasyUseHub</h2></header>
 
 <div class="container">
 
 <div class="custom-ad-bridge" onclick="window.open('https://easyusehub.blogspot.com', '_blank')">
     <span class="ad-title">🚀 Try 46+ Premium Free Web Tools!</span>
-    <p>PDF Tools, 16+ Calculators, Age & BMI Tracker - 100% Free</p>
+    <p>All PDF Tools, 16+ Calculators & More - 100% Free</p>
     <div class="ad-btn">Open EasyUseHub</div>
 </div>
 
-<div id="upload-box-area">
-    <label class="upload-btn" onclick="startProcess()">
-        📁 Click to Start PDF Editor
-    </label>
+<div id="start-area">
+    <button class="upload-btn" onclick="loadIframe()">📁 Click to Start PDF Editor</button>
 </div>
 
-<div id="widgetArea">
-    <p style="padding-top: 150px; color: #999;">The editor will load here after clicking the button.</p>
+<div id="editor-container">
+    <iframe id="tool-iframe" src=""></iframe>
 </div>
 
 <div class="custom-ad-bridge" style="background: linear-gradient(135deg, #7c3aed, #9333ea);" onclick="window.open('https://easyusehub.blogspot.com/p/ultimate-calculators-hub.html', '_blank')">
     <span class="ad-title">🔢 Smart Online Calculators</span>
-    <p>Loan EMI, Age, BMI & Percentage Calculators - All in One Hub</p>
+    <p>Loan EMI, Age, BMI & Percentage Calculators</p>
     <div class="ad-btn" style="background: #fff; color: #7c3aed;">Try Calculators</div>
 </div>
 
@@ -94,23 +91,22 @@ header{ background:#fff; padding:15px; box-shadow:0 2px 5px rgba(0,0,0,.1); }
 
 </div>
 
-<script src="https://tools.pdf24.org/static/js/widget.js"></script>
 <script>
-function startProcess() {
-    // Fillable PDF Editor Widget (edit-pdf)
-    pdf24.loadWidget('edit-pdf', {
-        containerId: 'widgetArea',
-        langCode: 'en',
-        widgetConfig: { theme: 'lightTheme' }
-    });
+function loadIframe() {
+    const iframe = document.getElementById('tool-iframe');
+    const container = document.getElementById('editor-container');
+    const startArea = document.getElementById('start-area');
 
-    // Hide upload button after loading
-    document.getElementById('upload-box-area').style.display = 'none';
+    // Tor dewa link-ta iframe e set korlam
+    iframe.src = "https://tools.pdf24.org/en/create-fillable-pdf-form";
+    
+    container.style.display = 'block';
+    startArea.style.display = 'none';
 
-    // Show Compact Push Ad
+    // Push notification active
     setTimeout(function() {
         document.getElementById('push-notification').classList.add('active');
-    }, 1500);
+    }, 2000);
 }
 </script>
 
